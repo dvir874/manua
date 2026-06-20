@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manua | המערכות שלנו עובדות. אתה לא.</title>
+  <meta name="description" content="אנחנו בונים CRM, אוטומציות WhatsApp ומערכות AI שמחליפות את האקסל, הפתקים ושעות ה-follow-up הידני — בעסק שרץ לבד." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #080808;
+      --bg2:       #0F0F0F;
+      --bg3:       #161616;
+      --border:    rgba(255,255,255,0.08);
+      --border2:   rgba(255,255,255,0.12);
+      --orange:    #FF6500;
+      --orange2:   #FF8C38;
+      --white:     #FFFFFF;
+      --gray:      rgba(255,255,255,0.5);
+      --gray2:     rgba(255,255,255,0.28);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Heebo', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .logo-name {
+      font-size: 24px; font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .logo-dot {
+      width: 7px; height: 7px;
+      background: var(--orange);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--orange);
+      margin-bottom: 3px;
+      flex-shrink: 0;
+    }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--orange);
+      color: white; font-weight: 700; font-size: 14px;
+      padding: 10px 22px; border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 0 24px rgba(255,101,0,0.4);
+    }
+    .nav-cta:hover {
+      background: var(--orange2);
+      box-shadow: 0 0 36px rgba(255,101,0,0.6);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 94vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 24px 80px;
+      overflow: hidden;
+    }
+    .hero-bg-glow {
+      position: absolute;
+      top: -10%; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(255,101,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; max-width: 900px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,101,0,0.1);
+      border: 1px solid rgba(255,101,0,0.3);
+      padding: 6px 18px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--orange); text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--orange);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 {
+      font-size: clamp(44px, 8vw, 96px);
+      font-weight: 900; line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+    }
+    .hero h1 .highlight {
+      color: var(--orange);
+      text-shadow: 0 0 60px rgba(255,101,0,0.5);
+    }
+    .hero h1 .dim { color: rgba(255,255,255,0.4); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--gray);
+      max-width: 600px; margin: 0 auto 52px;
+      font-weight: 400; line-height: 1.75;
+    }
+    .hero-actions {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--orange);
+      color: white; font-weight: 800; font-size: 16px;
+      padding: 16px 36px; border-radius: 6px;
+      text-decoration: none;
+      box-shadow: 0 0 40px rgba(255,101,0,0.45);
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--orange2);
+      box-shadow: 0 0 60px rgba(255,101,0,0.65);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent;
+      color: white; font-weight: 700; font-size: 16px;
+      padding: 16px 36px; border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid var(--border2);
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* stats bar */
+    .stats-bar {
+      margin-top: 72px;
+      display: flex; gap: 0; justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      max-width: 700px;
+      margin-left: auto; margin-right: auto;
+    }
+    .stat {
+      flex: 1;
+      padding: 22px 16px; text-align: center;
+      border-left: 1px solid var(--border);
+    }
+    .stat:last-child { border-left: none; }
+    .stat-num {
+      font-size: 28px; font-weight: 900; color: var(--orange);
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 20px rgba(255,101,0,0.4);
+    }
+    .stat-label { font-size: 12px; color: var(--gray2); margin-top: 4px; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 24px; position: relative; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.25em;
+      color: var(--orange); text-transform: uppercase;
+      margin-bottom: 20px;
+      border-right: 2px solid var(--orange);
+      padding-right: 12px;
+    }
+    .section-title {
+      font-size: clamp(30px, 4vw, 54px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 17px; color: var(--gray);
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    /* ── PROBLEM ── */
+    .problem {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .problem-header { margin-bottom: 56px; }
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 2px;
+    }
+    .pain-card {
+      background: var(--bg3);
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .pain-card::after {
+      content: '';
+      position: absolute; bottom: 0; right: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .pain-card:hover { border-color: rgba(255,101,0,0.3); }
+    .pain-card:hover::after { opacity: 1; }
+    .pain-num {
+      font-size: 64px; font-weight: 900;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      margin-bottom: 20px;
+      letter-spacing: -0.04em;
+    }
+    .pain-title { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+    .pain-text { font-size: 15px; color: var(--gray); line-height: 1.65; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--bg); }
+    .how-header { margin-bottom: 64px; }
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 24px;
+    }
+    .step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 36px 30px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .step:hover {
+      border-color: rgba(255,101,0,0.4);
+      box-shadow: 0 0 40px rgba(255,101,0,0.08);
+    }
+    .step-num {
+      font-size: 13px; font-weight: 800; letter-spacing: 0.2em;
+      color: var(--orange); text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .step-num::before {
+      content: '';
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--orange);
+    }
+    .step h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
+    .step p { font-size: 15px; color: var(--gray); line-height: 1.7; }
+
+    /* ── OFFER ── */
+    .offer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .offer-header { margin-bottom: 56px; }
+    .offer-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 2px;
+    }
+    .offer-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 40px 32px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .offer-card:hover {
+      border-color: rgba(255,255,255,0.15);
+    }
+    .offer-card.featured {
+      background: rgba(255,101,0,0.04);
+      border-color: rgba(255,101,0,0.4);
+    }
+    .offer-card.featured:hover {
+      border-color: rgba(255,101,0,0.7);
+      box-shadow: 0 0 60px rgba(255,101,0,0.1);
+    }
+    .featured-tag {
+      display: inline-block;
+      background: var(--orange);
+      color: white; font-size: 10px; font-weight: 800;
+      padding: 4px 12px; border-radius: 3px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .offer-name { font-size: 28px; font-weight: 900; margin-bottom: 4px; }
+    .offer-tagline { font-size: 14px; color: var(--gray); margin-bottom: 32px; }
+    .offer-divider {
+      height: 1px; background: var(--border);
+      margin-bottom: 28px;
+    }
+    .offer-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .offer-features li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.5;
+    }
+    .check { color: var(--orange); font-weight: 900; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── WHO ── */
+    .who { background: var(--bg); }
+    .who-header { margin-bottom: 56px; }
+    .who-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 2px;
+    }
+    .who-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .who-card::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 0%; height: 2px;
+      background: var(--orange);
+      transition: width 0.4s ease;
+    }
+    .who-card:hover::before { width: 100%; }
+    .who-card:hover { border-color: rgba(255,101,0,0.25); }
+    .who-icon { font-size: 30px; margin-bottom: 14px; }
+    .who-name { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .who-desc { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+    /* ── GUARANTEE ── */
+    .guarantee {
+      background: rgba(255,101,0,0.05);
+      border-top: 1px solid rgba(255,101,0,0.2);
+      border-bottom: 1px solid rgba(255,101,0,0.2);
+      padding: 80px 24px;
+    }
+    .guarantee-inner {
+      max-width: 760px; margin: 0 auto;
+      display: flex; gap: 40px; align-items: center;
+    }
+    .guarantee-icon {
+      font-size: 72px; flex-shrink: 0;
+      filter: drop-shadow(0 0 24px rgba(255,101,0,0.4));
+    }
+    .guarantee h2 {
+      font-size: 34px; font-weight: 900;
+      margin-bottom: 14px; letter-spacing: -0.02em;
+    }
+    .guarantee p { font-size: 16px; color: var(--gray); line-height: 1.7; }
+    .guarantee .orange { color: var(--orange); }
+
+    /* ── FAQ ── */
+    .faq-section { background: var(--bg2); border-top: 1px solid var(--border); }
+    .faq-header { margin-bottom: 52px; }
+    .faq-list { max-width: 760px; display: flex; flex-direction: column; gap: 2px; }
+    .faq-item {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: var(--border2); }
+    .faq-item.open { border-color: rgba(255,101,0,0.35); }
+    .faq-q {
+      font-weight: 700; font-size: 16px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      padding: 22px 24px;
+    }
+    .faq-arrow {
+      color: var(--orange); font-size: 22px; flex-shrink: 0;
+      transition: transform 0.25s;
+      line-height: 1;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 15px; color: var(--gray);
+      padding: 0 24px 22px; line-height: 1.75;
+      display: none;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--bg);
+      text-align: center; padding: 120px 24px;
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; bottom: -200px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(255,101,0,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-content { position: relative; max-width: 700px; margin: 0 auto; }
+    .cta-section .section-title { font-size: clamp(36px, 5vw, 64px); }
+    .cta-section .section-sub { margin: 0 auto 52px; }
+    .btn-wa-large {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: #22c55e; color: white;
+      font-weight: 800; font-size: 18px;
+      padding: 20px 48px; border-radius: 6px;
+      text-decoration: none;
+      box-shadow: 0 0 50px rgba(34,197,94,0.4);
+      transition: all 0.2s;
+    }
+    .btn-wa-large:hover {
+      box-shadow: 0 0 70px rgba(34,197,94,0.6);
+      transform: translateY(-2px);
+    }
+    .cta-note { margin-top: 24px; color: var(--gray2); font-size: 13px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      padding: 32px 24px;
+      text-align: center; color: var(--gray2);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--orange); text-decoration: none; }
+
+    /* ── FLOAT WA ── */
+    .wa-float {
+      position: fixed; bottom: 28px; left: 28px; z-index: 999;
+      width: 60px; height: 60px; border-radius: 6px;
+      background: #22c55e; color: white;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(34,197,94,0.5);
+      transition: all 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 50px rgba(34,197,94,0.7);
+    }
+    .wa-float svg { width: 28px; height: 28px; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+      padding: 16px 0;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 18s linear infinite;
+      width: max-content;
+    }
+    .marquee-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 0 32px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--gray2); text-transform: uppercase; white-space: nowrap;
+    }
+    .marquee-dot {
+      width: 4px; height: 4px; background: var(--orange); border-radius: 50%;
+    }
+    @keyframes marquee { 0%{ transform: translateX(0); } 100%{ transform: translateX(-50%); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      section { padding: 72px 16px; }
+      .hero { padding: 80px 16px 60px; min-height: 85vh; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost, .btn-wa-large { width: 100%; justify-content: center; }
+      .stats-bar { flex-direction: column; }
+      .stat { border-left: none; border-top: 1px solid var(--border); }
+      .stat:first-child { border-top: none; }
+      .guarantee-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <span class="logo-name">Manua</span>
+      <div class="logo-dot"></div>
+    </div>
+    <a href="https://wa.me/972533318177?text=%D7%94%D7%99%D7%99%20%D7%93%D7%91%D7%99%D7%A8%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20Manua%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%99%D7%95%D7%AA%D7%A8" target="_blank" class="nav-cta">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.124 1.533 5.857L.057 23.7a.5.5 0 0 0 .614.634l5.998-1.55A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-4.954-1.34l-.356-.21-3.692.953.984-3.59-.23-.368A9.818 9.818 0 1 1 12 21.818z"/></svg>
+      בואו נדבר
+    </a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      מערכות AI ואוטומציה לעסקים ישראלים
+    </div>
+    <h1>
+      המערכות שלנו<br/>
+      <span class="highlight">עובדות.</span><br/>
+      <span class="dim">אתה לא.</span>
+    </h1>
+    <p class="hero-sub">
+      CRM, WhatsApp automation ומערכות AI שמחליפות את האקסל, הפתקים ושעות ה-follow-up הידני — בעסק שרץ לבד.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/972533318177?text=%D7%94%D7%99%D7%99%20%D7%93%D7%91%D7%99%D7%A8%2C%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%99%D7%95%D7%AA%D7%A8" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.124 1.533 5.857L.057 23.7a.5.5 0 0 0 .614.634l5.998-1.55A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-4.954-1.34l-.356-.21-3.692.953.984-3.59-.23-.368A9.818 9.818 0 1 1 12 21.818z"/></svg>
+        שיחת היכרות חינם
+      </a>
+      <a href="#how" class="btn-ghost">
+        איך זה עובד ←
+      </a>
+    </div>
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-num">90 שנ'</div>
+        <div class="stat-label">מענה לכל ליד</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">21 יום</div>
+        <div class="stat-label">עד שהמערכת live</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">60 יום</div>
+        <div class="stat-label">ערבות מלאה</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">CRM מותאם <div class="marquee-dot"></div></div>
+    <div class="marquee-item">WhatsApp Automation <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Pipeline ניהול לידים <div class="marquee-dot"></div></div>
+    <div class="marquee-item">AI לכתיבת הצעות <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Follow-up אוטומטי <div class="marquee-dot"></div></div>
+    <div class="marquee-item">לוח בקרה בזמן אמת <div class="marquee-dot"></div></div>
+    <div class="marquee-item">מסמכים אוטומטיים <div class="marquee-dot"></div></div>
+    <div class="marquee-item">ייבוא לידים <div class="marquee-dot"></div></div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item">CRM מותאם <div class="marquee-dot"></div></div>
+    <div class="marquee-item">WhatsApp Automation <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Pipeline ניהול לידים <div class="marquee-dot"></div></div>
+    <div class="marquee-item">AI לכתיבת הצעות <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Follow-up אוטומטי <div class="marquee-dot"></div></div>
+    <div class="marquee-item">לוח בקרה בזמן אמת <div class="marquee-dot"></div></div>
+    <div class="marquee-item">מסמכים אוטומטיים <div class="marquee-dot"></div></div>
+    <div class="marquee-item">ייבוא לידים <div class="marquee-dot"></div></div>
+  </div>
+</div>
+
+<!-- ── PROBLEM ── -->
+<section class="problem">
+  <div class="container">
+    <div class="problem-header">
+      <p class="section-tag">הבעיה</p>
+      <h2 class="section-title">כסף שנופל<br/>על הרצפה, כל יום.</h2>
+      <p class="section-sub" style="margin-top:16px">בזמן שאתה עסוק — הלידים עוברים למתחרה שחזר קודם.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-num">01</div>
+        <div class="pain-title">ליד נכנס — ונאבד</div>
+        <p class="pain-text">ליד חדש נכנס. אתה עסוק. לא חזרת אליו בזמן. הוא הלך למתחרה שחזר בתוך שעה. זה קורה לך עכשיו.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-num">02</div>
+        <div class="pain-title">אקסל, פתקים, ראש</div>
+        <p class="pain-text">אין לך concept מה סטטוס כל עניין. שלושה מקומות שונים, אין תמונה אחת, ותמיד מחפש מידע.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-num">03</div>
+        <div class="pain-title">Follow-up ידני שוחק</div>
+        <p class="pain-text">שעות כל שבוע על מרדפים — טלפונים, הודעות, תזכורות. בזמן הזה יכולת לסגור עסקאות.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="how-header">
+      <p class="section-tag">הפתרון</p>
+      <h2 class="section-title">שלושה שלבים.<br/>עסק שרץ לבד.</h2>
+      <p class="section-sub" style="margin-top:16px">מה שעד היום עשית ידנית — המערכת שלנו עושה אוטומטית.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">שלב 01</div>
+        <h3>אבחון</h3>
+        <p>שעה אחת — מבינים איך אתה עובד היום, מה גוזל הכי הרבה זמן, ואיפה הכסף נופל. יוצאים עם תוכנית ברורה.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">שלב 02</div>
+        <h3>בנייה</h3>
+        <p>21 יום — מתקינים מערכת מותאמת אישית: CRM, WhatsApp automation, לוח בקרה, pipeline. הכל מחובר.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">שלב 03</div>
+        <h3>Live</h3>
+        <p>המערכת עולה. כל ליד מקבל מענה תוך 90 שניות. Follow-up רץ לבד. אתה רק סוגר עסקאות.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OFFER ── -->
+<section class="offer" id="services">
+  <div class="container">
+    <div class="offer-header">
+      <p class="section-tag">שירותים</p>
+      <h2 class="section-title">בחרו את הרמה<br/>שמתאימה לכם.</h2>
+    </div>
+    <div class="offer-grid">
+      <div class="offer-card">
+        <div class="offer-name">ביסוס</div>
+        <div class="offer-tagline">להתחיל נכון — תוך שבוע</div>
+        <div class="offer-divider"></div>
+        <ul class="offer-features">
+          <li><span class="check">→</span> אבחון תהליך עבודה מלא</li>
+          <li><span class="check">→</span> CRM מוגדר בהתאמה אישית</li>
+          <li><span class="check">→</span> אוטומציית WhatsApp בסיסית</li>
+          <li><span class="check">→</span> תבנית follow-up מוכנה</li>
+          <li><span class="check">→</span> הדרכה + סרטון מוקלט</li>
+        </ul>
+      </div>
+      <div class="offer-card featured">
+        <div class="featured-tag">✦ הכי פופולרי</div>
+        <div class="offer-name">מערכת</div>
+        <div class="offer-tagline">מערכת מלאה — תוך 21 יום</div>
+        <div class="offer-divider" style="background:rgba(255,101,0,0.2)"></div>
+        <ul class="offer-features">
+          <li><span class="check">→</span> CRM מותאם + לוח בקרה</li>
+          <li><span class="check">→</span> WhatsApp automation מלא</li>
+          <li><span class="check">→</span> Pipeline ניהול עסקאות</li>
+          <li><span class="check">→</span> ייבוא לידים אוטומטי</li>
+          <li><span class="check">→</span> דו"ח ביצועים חודשי</li>
+          <li><span class="check">→</span> ליווי חודשי שוטף</li>
+          <li><span class="check">→</span> 60 יום ערבות — מרוצה או מוחזר</li>
+        </ul>
+      </div>
+      <div class="offer-card">
+        <div class="offer-name">פלטפורמה</div>
+        <div class="offer-tagline">טרנספורמציה מלאה</div>
+        <div class="offer-divider"></div>
+        <ul class="offer-features">
+          <li><span class="check">→</span> כל מה שב"מערכת"</li>
+          <li><span class="check">→</span> AI לכתיבת הצעות מחיר</li>
+          <li><span class="check">→</span> מסמכים אוטומטיים</li>
+          <li><span class="check">→</span> ניתוח ותחזית עסקאות</li>
+          <li><span class="check">→</span> תמיכה multi-user</li>
+          <li><span class="check">→</span> ליווי אסטרטגי חודשי</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHO ── -->
+<section class="who">
+  <div class="container">
+    <div class="who-header">
+      <p class="section-tag">למי זה מתאים</p>
+      <h2 class="section-title">בנינו בשביל אלה<br/>שעסוקים מדי.</h2>
+    </div>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-icon">🏠</div>
+        <div class="who-name">מתווכי נדל"ן</div>
+        <div class="who-desc">לידים שלא נאבדים, follow-up שרץ לבד — עוד ליד לא ילך למתחרה.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">⚖️</div>
+        <div class="who-name">עורכי דין</div>
+        <div class="who-desc">ניהול לקוחות ומסמכים בלי כאב ראש. הכל במקום אחד.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🏥</div>
+        <div class="who-name">קליניקות</div>
+        <div class="who-desc">זימון, תזכורות ומעקב אוטומטי — המטופלים לא שוכחים.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">💼</div>
+        <div class="who-name">יועצים עסקיים</div>
+        <div class="who-desc">Pipeline לקוחות ו-CRM שעובד בשבילך — לא להיפך.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GUARANTEE ── -->
+<div class="guarantee">
+  <div class="guarantee-inner">
+    <div class="guarantee-icon">🛡️</div>
+    <div>
+      <h2>ערבות <span class="orange">60 יום</span> — בלי שאלות.</h2>
+      <p>ל"מערכת" ו"פלטפורמה" יש ערבות מלאה של 60 יום. אם לא תרגיש שיפור משמעותי בניהול הלידים ובזמן שחסכת — ה-retainer הראשון מוחזר במלואו. אנחנו עובדים עד שזה עובד.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ ── -->
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-header">
+      <p class="section-tag">שאלות נפוצות</p>
+      <h2 class="section-title">תשובות לפני שתשאלו.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          כמה זמן זה לוקח עד שהמערכת עולה לאוויר?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">21 יום מרגע האישור. שבוע ראשון — אבחון ותכנון. שבוע שני — בנייה. שבוע שלישי — התקנה, הדרכה, עלייה live.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          האם אני צריך לשנות את הדרך שאני עובד?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">לא. המערכת נבנית סביב הדרך שאתה כבר עובד — לא להיפך. אנחנו מתאימים את עצמנו אליך.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          מה אם זה לא עובד עבורי?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">ל"מערכת" יש ערבות של 60 יום — אם לא תרגיש שיפור משמעותי, ה-retainer הראשון מוחזר במלואו. אנחנו עובדים עד שזה עובד.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          האם המערכת עובדת עם וואטסאפ?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">כן — WhatsApp הוא הלב של המערכת. כל ליד מקבל מענה אוטומטי תוך 90 שניות, ו-follow-up רץ לבד לאורך 3 שבועות.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          מה עם פרטיות הלקוחות שלי?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">כל הנתונים שמורים על שרתים באירופה/ישראל. עומד בחוק הגנת הפרטיות הישראלי ובתקן GDPR. הנתונים שלך — שלך בלבד.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-content">
+    <p class="section-tag" style="display:inline-block;margin-bottom:20px">בואו נדבר</p>
+    <h2 class="section-title">מוכנים שהעסק<br/>יעבוד בשבילכם?</h2>
+    <p class="section-sub" style="margin: 20px auto 52px">שיחת היכרות של 20 דקות — בלי התחייבות. מבינים אם יש match ואיך זה נראה.</p>
+    <a href="https://wa.me/972533318177?text=%D7%94%D7%99%D7%99%20%D7%93%D7%91%D7%99%D7%A8%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20Manua%20%D7%95%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%99%D7%95%D7%AA%D7%A8%20%D7%A2%D7%9C%20%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA" target="_blank" class="btn-wa-large">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.124 1.533 5.857L.057 23.7a.5.5 0 0 0 .614.634l5.998-1.55A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-4.954-1.34l-.356-.21-3.692.953.984-3.59-.23-.368A9.818 9.818 0 1 1 12 21.818z"/></svg>
+      שלחו הודעה בוואטסאפ
+    </a>
+    <p class="cta-note">מענה בתוך שעה בשעות 08:00–21:00</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2025 Manua · מערכות עסקיות · <a href="https://wa.me/972533318177">053-331-8177</a></p>
+</footer>
+
+<!-- ── FLOAT WA ── -->
+<a href="https://wa.me/972533318177?text=%D7%94%D7%99%D7%99%20%D7%93%D7%91%D7%99%D7%A8" target="_blank" class="wa-float" aria-label="וואטסאפ">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.124 1.533 5.857L.057 23.7a.5.5 0 0 0 .614.634l5.998-1.55A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-4.954-1.34l-.356-.21-3.692.953.984-3.59-.23-.368A9.818 9.818 0 1 1 12 21.818z"/></svg>
+</a>
+
+</body>
+</html>
