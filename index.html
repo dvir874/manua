@@ -507,6 +507,62 @@
     }
     @keyframes marquee { 0%{ transform: translateX(0); } 100%{ transform: translateX(-50%); } }
 
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--bg2); border-top: 1px solid var(--border); }
+    .t-header { margin-bottom: 56px; }
+    .t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 2px; }
+    .t-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 36px 32px; position: relative; transition: border-color 0.3s;
+    }
+    .t-card:hover { border-color: rgba(255,255,255,0.15); }
+    .t-card.featured-t { border-color: rgba(255,101,0,0.35); background: rgba(255,101,0,0.03); }
+    .t-quote {
+      font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.85);
+      margin-bottom: 28px; font-style: italic;
+    }
+    .t-quote::before { content: '"'; color: var(--orange); font-size: 32px; line-height: 0; vertical-align: -12px; margin-left: 4px; }
+    .t-author { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .t-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,101,0,0.15); border: 1px solid rgba(255,101,0,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px; color: var(--orange); flex-shrink: 0;
+    }
+    .t-name { font-weight: 800; font-size: 15px; }
+    .t-role { font-size: 13px; color: var(--gray2); margin-top: 2px; }
+    .t-stat {
+      font-size: 13px; color: var(--gray2); border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .t-stat span { color: var(--orange); font-weight: 700; }
+
+    /* ── SCARCITY BAR ── */
+    .scarcity-bar {
+      background: rgba(255,101,0,0.08);
+      border-top: 1px solid rgba(255,101,0,0.2);
+      border-bottom: 1px solid rgba(255,101,0,0.2);
+      padding: 16px 24px; text-align: center;
+    }
+    .scarcity-inner {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 14px; font-weight: 700;
+    }
+    .scarcity-dot {
+      width: 8px; height: 8px; background: var(--orange); border-radius: 50%;
+      box-shadow: 0 0 12px var(--orange);
+      animation: blink 1.5s ease-in-out infinite; flex-shrink: 0;
+    }
+    .scarcity-inner span { color: var(--orange); }
+
+    /* pricing on offer cards */
+    .offer-price {
+      font-size: 32px; font-weight: 900; margin: 20px 0 4px;
+      letter-spacing: -0.02em;
+    }
+    .offer-price-sub { font-size: 13px; color: var(--gray2); margin-bottom: 28px; }
+    .offer-price .plus { font-size: 16px; color: var(--gray); font-weight: 500; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       section { padding: 72px 16px; }
@@ -658,6 +714,14 @@
   </div>
 </section>
 
+<!-- ── SCARCITY ── -->
+<div class="scarcity-bar">
+  <div class="scarcity-inner">
+    <div class="scarcity-dot"></div>
+    מקבלים <span>3 לקוחות חדשים בחודש בלבד</span> — כרגע יש <span>מקום ל-1</span> נוסף
+  </div>
+</div>
+
 <!-- ── OFFER ── -->
 <section class="offer" id="services">
   <div class="container">
@@ -669,6 +733,8 @@
       <div class="offer-card">
         <div class="offer-name">ביסוס</div>
         <div class="offer-tagline">להתחיל נכון — תוך שבוע</div>
+        <div class="offer-price">₪3,500 <span class="plus">חד-פעמי</span></div>
+        <div class="offer-price-sub">אין retainer חודשי</div>
         <div class="offer-divider"></div>
         <ul class="offer-features">
           <li><span class="check">→</span> אבחון תהליך עבודה מלא</li>
@@ -682,6 +748,8 @@
         <div class="featured-tag">✦ הכי פופולרי</div>
         <div class="offer-name">מערכת</div>
         <div class="offer-tagline">מערכת מלאה — תוך 21 יום</div>
+        <div class="offer-price">₪9,500 <span class="plus">+ ₪1,800/חודש</span></div>
+        <div class="offer-price-sub">ערבות 60 יום — מרוצה או מוחזר</div>
         <div class="offer-divider" style="background:rgba(255,101,0,0.2)"></div>
         <ul class="offer-features">
           <li><span class="check">→</span> CRM מותאם + לוח בקרה</li>
@@ -696,6 +764,8 @@
       <div class="offer-card">
         <div class="offer-name">פלטפורמה</div>
         <div class="offer-tagline">טרנספורמציה מלאה</div>
+        <div class="offer-price">₪25,000 <span class="plus">+ ₪3,500/חודש</span></div>
+        <div class="offer-price-sub">multi-user + AI + ליווי אסטרטגי</div>
         <div class="offer-divider"></div>
         <ul class="offer-features">
           <li><span class="check">→</span> כל מה שב"מערכת"</li>
@@ -710,33 +780,79 @@
   </div>
 </section>
 
+<!-- ── SOCIAL PROOF ── -->
+<section class="testimonials">
+  <div class="container">
+    <div class="t-header">
+      <p class="section-tag">מה אומרים עלינו</p>
+      <h2 class="section-title">תוצאות אמיתיות.<br/>מתווכים אמיתיים.</h2>
+    </div>
+    <div class="t-grid">
+      <div class="t-card">
+        <div class="t-quote">"לפני Manua הייתי מאבד ליד אחד לפחות בשבוע. עכשיו כל ליד מקבל מענה תוך דקה — גם כשאני בפגישה."</div>
+        <div class="t-author">
+          <div class="t-avatar">ר</div>
+          <div>
+            <div class="t-name">רן מ.</div>
+            <div class="t-role">מתווך נדל"ן · גוש דן</div>
+          </div>
+        </div>
+        <div class="t-stat">חסך <span>8 שעות</span> בשבוע</div>
+      </div>
+      <div class="t-card featured-t">
+        <div class="t-quote">"21 יום ועלינו live. עכשיו יש לי לוח בקרה שמראה לי כל עסקה, כל ליד, כל follow-up — בשניה אחת."</div>
+        <div class="t-author">
+          <div class="t-avatar">א</div>
+          <div>
+            <div class="t-name">אבי ל.</div>
+            <div class="t-role">מתווך עצמאי · תל אביב</div>
+          </div>
+        </div>
+        <div class="t-stat">סגר <span>2 עסקאות נוספות</span> בחודש הראשון</div>
+      </div>
+      <div class="t-card">
+        <div class="t-quote">"ניסיתי 3 מערכות לפני. כולן היו מסובכות מדי. של דביר — עבדה מהיום הראשון."</div>
+        <div class="t-author">
+          <div class="t-avatar">מ</div>
+          <div>
+            <div class="t-name">מיכאל ג.</div>
+            <div class="t-role">מתווך · רמת גן</div>
+          </div>
+        </div>
+        <div class="t-stat">מערכת live תוך <span>21 יום</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── WHO ── -->
 <section class="who">
   <div class="container">
     <div class="who-header">
       <p class="section-tag">למי זה מתאים</p>
-      <h2 class="section-title">בנינו בשביל אלה<br/>שעסוקים מדי.</h2>
+      <h2 class="section-title">בנינו בשביל<br/>מתווכי נדל"ן.</h2>
+      <p class="section-sub" style="margin-top:16px">מתווך סולו עם 2–10 עסקאות בחודש שעייף מלרדוף אחרי לידים.</p>
     </div>
     <div class="who-grid">
       <div class="who-card">
+        <div class="who-icon">📱</div>
+        <div class="who-name">עובד ב-WhatsApp</div>
+        <div class="who-desc">כל התקשורת עם לקוחות עוברת בוואטסאפ — המערכת בנויה סביב זה.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">📊</div>
+        <div class="who-name">ניהול ב-Excel</div>
+        <div class="who-desc">אם ה-"CRM" שלך הוא גיליון אקסל ופתקים — בדיוק בשבילך.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">⏰</div>
+        <div class="who-name">עסוק מדי</div>
+        <div class="who-desc">אין לך זמן לרדוף אחרי לידים — אבל גם לא יכול להרשות לעצמך לאבד אותם.</div>
+      </div>
+      <div class="who-card">
         <div class="who-icon">🏠</div>
-        <div class="who-name">מתווכי נדל"ן</div>
-        <div class="who-desc">לידים שלא נאבדים, follow-up שרץ לבד — עוד ליד לא ילך למתחרה.</div>
-      </div>
-      <div class="who-card">
-        <div class="who-icon">⚖️</div>
-        <div class="who-name">עורכי דין</div>
-        <div class="who-desc">ניהול לקוחות ומסמכים בלי כאב ראש. הכל במקום אחד.</div>
-      </div>
-      <div class="who-card">
-        <div class="who-icon">🏥</div>
-        <div class="who-name">קליניקות</div>
-        <div class="who-desc">זימון, תזכורות ומעקב אוטומטי — המטופלים לא שוכחים.</div>
-      </div>
-      <div class="who-card">
-        <div class="who-icon">💼</div>
-        <div class="who-name">יועצים עסקיים</div>
-        <div class="who-desc">Pipeline לקוחות ו-CRM שעובד בשבילך — לא להיפך.</div>
+        <div class="who-name">גוש דן</div>
+        <div class="who-desc">עובדים עם מתווכים בת"א, רמת גן, גבעתיים, בני ברק, פתח תקווה.</div>
       </div>
     </div>
   </div>
