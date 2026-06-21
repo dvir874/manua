@@ -1,4 +1,4 @@
-# MANUA — DAILY OPERATING SYSTEM
+# KORE — DAILY OPERATING SYSTEM
 
 ---
 
@@ -134,4 +134,4 @@
 
 ---
 
-*Manua · מעדכנים את זה כל חודש*
+*Kore · מעדכנים את זה כל חודש*

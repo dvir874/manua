@@ -1,4 +1,4 @@
-# MANUA — Google Review Automation
+# KORE — Google Review Automation
 ## אוטומציית ביקורות גוגל — הגדרה + הודעות מוכנות
 
 ---
@@ -152,4 +152,4 @@
 
 ---
 
-*Manua · manua-il.netlify.app*
+*Kore · kore-il.netlify.app*

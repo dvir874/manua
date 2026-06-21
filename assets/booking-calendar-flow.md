@@ -1,4 +1,4 @@
-# MANUA — Booking Calendar Flow
+# KORE — Booking Calendar Flow
 ## יומן פגישות אוטומטי — הגדרה מלאה
 
 ---
@@ -181,4 +181,4 @@ Events: BOOKING_CREATED, BOOKING_CANCELLED
 
 ---
 
-*Manua · manua-il.netlify.app*
+*Kore · kore-il.netlify.app*
